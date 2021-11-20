@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\storeBooks.business\storeBooks.business.csproj" />
+    <ProjectReference Include="..\storeBooks.infra.data\storeBooks.infra.data.csproj" />
+    <ProjectReference Include="..\storeBooks.repository\storeBooks.repository.csproj" />
+    <ProjectReference Include="..\storeBooks.service\storeBooks.service.csproj" />
+  </ItemGroup>
+
+
+</Project>
