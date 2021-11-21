@@ -17,7 +17,7 @@ namespace storeBooks.service.models
 
         public IEnumerable<BookStore> GetByAuthor(string author)
         {
-            throw new NotImplementedException();
+            return _booksBusiness.GetByAuthor(author);
         }
 
         public BookStore GetById(int id)
@@ -27,12 +27,12 @@ namespace storeBooks.service.models
 
         public IEnumerable<BookStore> GetByName(string description)
         {
-            throw new NotImplementedException();
+            return _booksBusiness.GetByName(description);
         }
 
         public IEnumerable<BookStore> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            return _booksBusiness.GetByTitle(title);
         }
     }
 }

@@ -80,16 +80,16 @@ namespace storeBooks.api
         {
             Random randNum = new Random();
 
-            context.Add(new BookStoreModel { Author = "Orgulho e Preconceito", Id = 1, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Jane Austen" });
-            context.Add(new BookStoreModel { Author = "1984", Id = 2, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "George Orwell" });
-            context.Add(new BookStoreModel { Author = "Dom Quixote de la Mancha ", Id = 3, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Miguel de Cervantes" });
-            context.Add(new BookStoreModel { Author = "O Pequeno Príncipe", Id = 4, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Antoine de Saint-Exupéry" });
-            context.Add(new BookStoreModel { Author = "Dom Casmurro", Id = 5, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Machado de Assis" });
-            context.Add(new BookStoreModel { Author = "O Bandolim do Capitão Corelli", Id = 6, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Louis de Bernières" });
-            context.Add(new BookStoreModel { Author = "O Conde de Monte Cristo", Id = 7, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Alexandre Dumas" });
-            context.Add(new BookStoreModel { Author = "Um Estudo em Vermelho", Id = 8, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Arthur Conan Doyle" });
-            context.Add(new BookStoreModel { Author = "O Processo", Id = 9, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Franz Kafka" });
-            context.Add(new BookStoreModel { Author = "Cem Anos de Solidão", Id = 10, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Title = "Gabriel García Márquez" });
+            context.Add(new BookStoreModel { Title = "Orgulho e Preconceito", Id = 1, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Jane Austen" });
+            context.Add(new BookStoreModel { Title = "1984", Id = 2, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "George Orwell" });
+            context.Add(new BookStoreModel { Title = "Dom Quixote de la Mancha ", Id = 3, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Miguel de Cervantes" });
+            context.Add(new BookStoreModel { Title = "O Pequeno Príncipe", Id = 4, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Antoine de Saint-Exupéry" });
+            context.Add(new BookStoreModel { Title = "Dom Casmurro", Id = 5, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Machado de Assis" });
+            context.Add(new BookStoreModel { Title = "O Bandolim do Capitão Corelli", Id = 6, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Louis de Bernières" });
+            context.Add(new BookStoreModel { Title = "O Conde de Monte Cristo", Id = 7, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Alexandre Dumas" });
+            context.Add(new BookStoreModel { Title = "Um Estudo em Vermelho", Id = 8, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Arthur Conan Doyle" });
+            context.Add(new BookStoreModel { Title = "O Processo", Id = 9, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Franz Kafka" });
+            context.Add(new BookStoreModel { Title = "Cem Anos de Solidão", Id = 10, Price = Math.Round(Convert.ToDecimal(randNum.Next(99) + randNum.NextDouble()), 2), IsDeleted = false, Author = "Gabriel García Márquez" });
 
             context.SaveChanges();
         

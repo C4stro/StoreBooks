@@ -16,11 +16,11 @@ namespace storeBooks.api.Middleware
     {
         public static void InjectionDependencyMiddleware(this IServiceCollection service)
         {
-            service.AddDbContext<DbContextModels>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
-
-            service.AddSingleton<IBooksRepository, BooksRepository>();
+            service.AddScoped<IBooksRepository, BooksRepository>();
             service.AddTransient<IBooksBusiness, BookBusiness>();
             service.AddTransient<IBooksService, BooksService>();
+
+            service.AddDbContext<DbContextModels>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), ServiceLifetime.Scoped);
         }
     }
 }

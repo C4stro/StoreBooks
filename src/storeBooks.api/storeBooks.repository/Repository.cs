@@ -9,7 +9,7 @@ namespace storeBooks.repository
     public class Repository<T> : IRepository<T> where T : class
     {
         #region Props
-        private readonly DbContextModels _context;
+        
         #endregion
 
         //public Repository(DbContextModels context)

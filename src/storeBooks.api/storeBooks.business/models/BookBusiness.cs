@@ -3,6 +3,7 @@ using storeBooks.domain.models;
 using storeBooks.repository.interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace storeBooks.business.models
@@ -18,22 +19,42 @@ namespace storeBooks.business.models
 
         public IEnumerable<BookStore> GetByAuthor(string author)
         {
-            throw new NotImplementedException();
+            var books = _booksRepository.GetByAuthor(author);
+
+            if (books == null)
+                return null;
+
+            return books.Select(b => new BookStore(b.Title, b.Author, b.Price, b.Id)).ToList();
         }
 
         public BookStore GetById(int id)
         {
-            return _booksRepository.GetById(id);
+            BookStoreModel book = _booksRepository.GetById(id);
+
+            if (book == null)
+                return null;
+
+            return new BookStore(book.Title, book.Author, book.Price, book.Id);
         }
 
         public IEnumerable<BookStore> GetByName(string description)
         {
-            throw new NotImplementedException();
+            //BookStoreModel book = _booksRepository.GetByName(description);
+
+            //if (book == null)
+            //    return null;
+
+            return null;
         }
 
         public IEnumerable<BookStore> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            var books = _booksRepository.GetByTitle(title);
+
+            if (books == null)
+                return null;
+
+            return books.Select(b => new BookStore(b.Title, b.Author, b.Price, b.Id)).ToList();
         }
     }
 }

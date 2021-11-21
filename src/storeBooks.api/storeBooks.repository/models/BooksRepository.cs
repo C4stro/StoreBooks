@@ -1,37 +1,78 @@
 ﻿using storeBooks.domain.models;
+using storeBooks.repository.Dto;
 using storeBooks.repository.interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace storeBooks.repository.models
 {
-    public class BooksRepository : Repository<BookStore>, IBooksRepository
+    public class BooksRepository : Repository<BookStoreModel>, IBooksRepository
     {
-        public IEnumerable<BookStore> GetByAuthor(string author)
+        private readonly DbContextModels _context;
+
+        public BooksRepository(DbContextModels context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public BookStore GetById(int id)
+        public IEnumerable<BookStoreModel> GetByAuthor(string author)
         {
-            return new BookStore
+            try
             {
-                Author = "Castro",
-                Id = 1,
-                Price = Convert.ToDecimal(15.9880),
-                Status = true,
-                Title = "test"
-            };
+                return _context.BooksStores.Where(x => x.Author.ToLower() == author.ToLower());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
         }
 
-        public IEnumerable<BookStore> GetByName(string description)
+        public BookStoreModel GetById(int id)
+        {
+            try
+            {
+                return _context.BooksStores.FirstOrDefault(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
+        }
+
+        public IEnumerable<BookStoreModel> GetByName(string description)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BookStore> GetByTitle(string title)
+        public IEnumerable<BookStoreModel> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.BooksStores.Where(x => x.Title.ToLower() == title.ToLower());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
+        }
+
+        private bool AddDataInMemory(BookStoreModel book)
+        {
+            try
+            {
+                _context.Add(new BookStoreModel { Author = book.Author, Id = 4, Price = Math.Round(Convert.ToDecimal(book.Price), 2), IsDeleted = false, Title = book.Title });
+
+                if (_context.SaveChanges() > 0)
+                    return true;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
+
         }
     }
 }
