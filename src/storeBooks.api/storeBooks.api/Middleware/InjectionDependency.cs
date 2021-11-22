@@ -20,6 +20,10 @@ namespace storeBooks.api.Middleware
             service.AddTransient<IBooksBusiness, BookBusiness>();
             service.AddTransient<IBooksService, BooksService>();
 
+            service.AddScoped<ISalesBookRepository, SalesBookRepository>();
+            service.AddTransient<ISalesBooksBusiness, SalesBooksBusiness>();
+            service.AddTransient<ISalesBookService, SalesBookService>();
+
             service.AddDbContext<DbContextModels>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), ServiceLifetime.Scoped);
         }
     }

@@ -1,7 +1,6 @@
 ﻿using storeBooks.business.interfaces;
 using storeBooks.domain.models;
 using storeBooks.service.interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace storeBooks.service.models
@@ -15,6 +14,16 @@ namespace storeBooks.service.models
             _booksBusiness = booksBusiness;
         }
 
+        public BookStore Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<BookStore> GetAll(string currency)
+        {
+            return _booksBusiness.GetAll(currency);
+        }
+
         public IEnumerable<BookStore> GetByAuthor(string author)
         {
             return _booksBusiness.GetByAuthor(author);
@@ -25,14 +34,19 @@ namespace storeBooks.service.models
             return _booksBusiness.GetById(id);
         }
 
-        public IEnumerable<BookStore> GetByName(string description)
-        {
-            return _booksBusiness.GetByName(description);
-        }
-
         public IEnumerable<BookStore> GetByTitle(string title)
         {
             return _booksBusiness.GetByTitle(title);
+        }
+
+        public BookStore Insert(BookStore book)
+        {
+            return _booksBusiness.Insert(book);
+        }
+
+        public BookStore Update(BookStore book)
+        {
+            return _booksBusiness.Update(book);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using storeBooks.domain.models;
+using storeBooks.domain.Shared;
 using storeBooks.repository.Dto;
 using storeBooks.service.interfaces;
 using System;
@@ -27,16 +28,16 @@ namespace storeBooks.api.Controllers
         }
 
         [HttpGet]
-        [Route("All")]
-        public ActionResult<IEnumerable<BookStore>> GetAll()
+        [Route("All/{currency?}")]
+        public ActionResult<IEnumerable<BookStore>> GetAll(EnumExchange.Exchanges? currency = null)
         {
             try
             {
                 _logger.LogInformation($"Requisition for get all books actived in {DateTime.Now}");
 
-                var books = _context.BooksStores.ToList();
+                var books = _booksService.GetAll(currency.ToString());
 
-                if (books.Count == 0)
+                if (books == null)
                     return NoContent();
 
                 return Ok(books);
@@ -51,18 +52,18 @@ namespace storeBooks.api.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public ActionResult<IEnumerable<BookStore>> Create()
+        public ActionResult<IEnumerable<BookStore>> Create([FromBody] BookStore book)
         {
             try
             {
                 _logger.LogInformation($"Requisition for create {DateTime.Now}");
 
-                var books = _context.BooksStores.ToList();
+                var result = _booksService.Insert(book);
 
-                if (books == null)
+                if (result == null)
                     return NoContent();
 
-                return Ok(books);
+                return Created("", result);
             }
             catch (Exception ex)
             {
@@ -72,7 +73,7 @@ namespace storeBooks.api.Controllers
         }
 
         [HttpGet]
-        [Route("ID/{Id}")]
+        [Route("ID")]
         public ActionResult<IEnumerable<BookStore>> GetById(int id)
         {
             try
@@ -133,6 +134,25 @@ namespace storeBooks.api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Requisition for GetByTitle BadRequest: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public ActionResult<IEnumerable<BookStore>> Update([FromBody] BookStore book)
+        {
+            try
+            {
+                _logger.LogInformation($"Requisition for Update {DateTime.Now}");
+
+                var result = _booksService.Update(book);
+
+                return Ok(book);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Requisition for Update BadRequest: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }

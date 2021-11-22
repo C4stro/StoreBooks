@@ -1,5 +1,5 @@
-﻿using storeBooks.domain.models;
-using storeBooks.repository.Dto;
+﻿using storeBooks.repository.Dto;
+using storeBooks.repository.entities;
 using storeBooks.repository.interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,69 @@ namespace storeBooks.repository.models
         public BooksRepository(DbContextModels context)
         {
             _context = context;
+        }
+
+        public IEnumerable<BookStoreModel> GetAllActive(string currency = null)
+        {
+            try
+            {
+                if(currency == null || currency == "EUR")
+                    return _context.BooksStores.Where(x => x.IsDeleted == false);
+
+                ExchangeValues valuesExchange = ExchangeLatest();
+
+                IEnumerable<BookStoreModel> listBooks = _context.BooksStores.Where(x => x.IsDeleted == false);
+
+                return ConvertBooksExchangeCurrency(valuesExchange, listBooks, currency);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
+        }
+
+        private decimal GetRateCurrency(string currency, ExchangeValues valuesExchange)
+        {
+            try
+            {
+                decimal percentConversion = 1;
+                
+                if (currency == "USD")
+                    return Convert.ToDecimal(valuesExchange.Rates.USD);
+
+                if (currency == "GBP")
+                    return Convert.ToDecimal(valuesExchange.Rates.GBP);
+
+                if (currency == "BRL")
+                    return Convert.ToDecimal(valuesExchange.Rates.BRL);
+
+                return percentConversion;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
+        }
+
+        public IEnumerable<BookStoreModel> ConvertBooksExchangeCurrency(ExchangeValues valuesExchange, IEnumerable<BookStoreModel> listBooks, string currency)
+        {
+            try
+            {
+                decimal factor = GetRateCurrency(currency, valuesExchange);
+
+                foreach (var item in listBooks)
+                {
+                    item.Price = Math.Round(item.Price * factor, 2);
+                }
+
+                return listBooks;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
         }
 
         public IEnumerable<BookStoreModel> GetByAuthor(string author)
@@ -40,11 +103,6 @@ namespace storeBooks.repository.models
             }
         }
 
-        public IEnumerable<BookStoreModel> GetByName(string description)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<BookStoreModel> GetByTitle(string title)
         {
             try
@@ -57,22 +115,48 @@ namespace storeBooks.repository.models
             }
         }
 
-        private bool AddDataInMemory(BookStoreModel book)
+        public bool Inactivate(BookStoreModel obj)
+        {
+            return Update(obj);
+        }
+
+        public int Insert(BookStoreModel obj)
         {
             try
             {
-                _context.Add(new BookStoreModel { Author = book.Author, Id = 4, Price = Math.Round(Convert.ToDecimal(book.Price), 2), IsDeleted = false, Title = book.Title });
+                int? id = _context.BooksStores.Max(x => x.Id) + 1;
+
+                _context.Add(new BookStoreModel { Author = obj.Author, Id = id, Price = Math.Round(Convert.ToDecimal(obj.Price), 2), IsDeleted = false, Title = obj.Title });
 
                 if (_context.SaveChanges() > 0)
-                    return true;
+                    return Convert.ToInt32(id);
 
-                return false;
+                return 0;
             }
             catch (Exception ex)
             {
                 throw new Exception($"Exception: {ex.Message}");
             }
+        }
 
+        public bool Update(BookStoreModel obj)
+        {
+            try
+            {
+                if (_context.BooksStores.Where(x => x.Id == obj.Id) == null)
+                    throw new Exception("No Records for this book");
+
+                _context.BooksStores.Update(obj);
+
+                if(_context.SaveChanges() > 0)
+                    return true;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
         }
     }
 }

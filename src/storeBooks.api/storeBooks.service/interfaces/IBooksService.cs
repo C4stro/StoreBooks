@@ -8,9 +8,12 @@ namespace storeBooks.service.interfaces
 {
     public interface IBooksService
     {
-        IEnumerable<BookStore> GetByName(string description);
         BookStore GetById(int id);
         IEnumerable<BookStore> GetByTitle(string title);
         IEnumerable<BookStore> GetByAuthor(string author);
+        IEnumerable<BookStore> GetAll(string currency);
+        BookStore Insert(BookStore book);
+        BookStore Update(BookStore book);
+        BookStore Delete(int id);
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using storeBooks.domain.models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using storeBooks.infra.data.Dto;
 
 namespace storeBooks.repository.Dto
 {
@@ -14,5 +11,7 @@ namespace storeBooks.repository.Dto
         }
 
         public DbSet<BookStoreModel> BooksStores { get; set; }
+        public DbSet<SalesBookStoreModel> Sales { get; set; }
+        public DbSet<BooksPurchaseModel> BooksPurchase { get; set; }
     }
 }

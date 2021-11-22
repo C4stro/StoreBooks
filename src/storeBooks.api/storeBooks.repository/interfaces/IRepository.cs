@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using storeBooks.repository.entities;
 
 namespace storeBooks.repository.interfaces
 {
     public interface IRepository<T>
     {
-        int Insert(T obj);
-        bool Update(T obj);
-        bool Inactivate(T obj);
-        IEnumerable<T> GetAllActive();
+        public ExchangeValues ExchangeLatest();
     }
 }

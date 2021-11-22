@@ -1,40 +1,54 @@
-﻿using storeBooks.repository.Dto;
+﻿using Microsoft.Extensions.Configuration;
+using storeBooks.repository.entities;
 using storeBooks.repository.interfaces;
 using System;
+using Newtonsoft.Json;
+using System.IO;
+using System.Net;
 using System.Collections.Generic;
-using System.Text;
 
 namespace storeBooks.repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        #region Props
-        
-        #endregion
+        private readonly ExchangeApiConfs _exchangeApiConfs = new ExchangeApiConfs();
 
-        //public Repository(DbContextModels context)
-        //{
-        //    _context = context;
-        //}
-
-        public IEnumerable<T> GetAllActive()
+        public Repository()
         {
-            throw new NotImplementedException();
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            _exchangeApiConfs.UrlBase = config.GetSection("ExchangeApiConfs:UrlBase").Value;
+            _exchangeApiConfs.ExchagenToken = config.GetSection("ExchangeApiConfs:ExchageToken").Value;
+
         }
 
-        public bool Inactivate(T obj)
+        public ExchangeValues ExchangeLatest()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var requisition = (HttpWebRequest)WebRequest.Create($"{_exchangeApiConfs.UrlBase}/latest?access_key={_exchangeApiConfs.ExchagenToken}");
+                requisition.ContentType = "application/json";
+                requisition.Method = "GET";
+                
+                return RequisitionHttp(requisition);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Exception: {ex.Message}");
+            }
         }
 
-        public int Insert(T obj)
+        private ExchangeValues RequisitionHttp(HttpWebRequest requisition)
         {
-            throw new NotImplementedException();
-        }
+            var respostaHttp = (HttpWebResponse)requisition.GetResponse();
 
-        public bool Update(T obj)
-        {
-            throw new NotImplementedException();
+            using var streamReader = new StreamReader(respostaHttp.GetResponseStream());
+            var jsonReturn = streamReader.ReadToEnd();
+
+            return JsonConvert.DeserializeObject<ExchangeValues>(jsonReturn);
         }
     }
 }
