@@ -20,7 +20,7 @@ jobs:
         dotnet-version: 3.1.301
     
     - name: Install dependencies
-      run: dotnet restore ./src/storeBooks.api
+      run: dotnet restore ../../../src/storeBooks.api
    
     - name: Build
       run: dotnet build --configuration Release --no-restore
