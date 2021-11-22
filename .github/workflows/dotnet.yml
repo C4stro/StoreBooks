@@ -33,7 +33,7 @@ jobs:
       
     - name: Zip Package
       run: |
-        cd ${{ github.workspace }}/out
+        cd $/out
         Zip -r ${{ github.workspace }}/out.Zip *
       
     - name: Deploy to EB
