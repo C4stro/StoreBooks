@@ -1,6 +1,8 @@
 # Store Books
 ## AWS + Github Action + .NET (In Memory + EF Core + DDD + Swagger)
 
+###### Current project link: http://storebooks-env.eba-nrkgk92y.us-east-2.elasticbeanstalk.com/ ######
+
 [![Deploy AWS.](https://github.com/C4stro/StoreBooks/actions/workflows/dotnet.yml/badge.svg)](https://github.com/C4stro/StoreBooks/actions/workflows/dotnet.yml)
 
 Project for the purchase and registration of books with the possibility of converting the value into EUR, BRL, GBP and USD.
