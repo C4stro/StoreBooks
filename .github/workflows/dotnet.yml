@@ -46,4 +46,4 @@ jobs:
         region: us-east-2
         version_label: ${{ github.run_id }}
         version_description: ${{ github.sha }}
-        deployment_package: ${{ github.workspace }}/out.zip
+        deployment_package: ./src/storeBooks.api/storeBooks.api/bin/Debug/netcoreapp3.1/publish/out.Zip
