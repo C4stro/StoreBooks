@@ -44,6 +44,6 @@ jobs:
         application_name: store-books
         environment_name: store-books-dev
         region: us-east-2
-        version_lable: aws-github
+        version_label: ${{ github.run_id }}
         version_description: ${{ github.sha }}
         deployment_package: ${{ github.workspace }}/out.zip
