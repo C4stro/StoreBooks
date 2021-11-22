@@ -34,7 +34,7 @@ jobs:
     - name: Zip Package
       run: |
         cd ./src/storeBooks.api/storeBooks.api/bin/Debug/netcoreapp3.1/
-        Zip -r publish/out.Zip *
+        zip -r publish/out.Zip *
       
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v13
