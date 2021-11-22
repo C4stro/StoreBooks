@@ -33,8 +33,8 @@ jobs:
       
     - name: Zip Package
       run: |
-        cd $/out
-        Zip -r ${{ github.workspace }}/out.Zip *
+        cd ./src/storeBooks.api/storeBooks.api/out
+        Zip -r ./src/storeBooks.api/storeBooks.api/out.Zip *
       
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v13
