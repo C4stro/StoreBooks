@@ -29,15 +29,12 @@ jobs:
       run: dotnet test --no-build --verbosity normal ./src/storeBooks.api/storeBooks.api/
     
     - name: Publish
-      run: |
-        cd ./src/storeBooks.api/storeBooks.api/
-        mkdir out 
-        dotnet publish out
+      run: dotnet publish ./src/storeBooks.api/storeBooks.api/
       
     - name: Zip Package
       run: |
-        cd ./src/storeBooks.api/storeBooks.api/out
-        Zip -r ./src/storeBooks.api/storeBooks.api/out.Zip *
+        cd ./src/storeBooks.api/storeBooks.api/bin/Debug/netcoreapp3.1/
+        Zip -r publish/out.Zip *
       
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v13
