@@ -29,7 +29,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal ./src/storeBooks.api/storeBooks.api/
     
     - name: Publish
-      run: dotnet publish -c Release -o '${{ github.workspace }}/out'
+      run: dotnet publish -c Release -o ./src/storeBooks.api/storeBooks.api/
       
     - name: Zip Package
       run: |
