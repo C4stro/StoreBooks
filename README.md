@@ -5,6 +5,7 @@
 
 [![Deploy AWS.](https://github.com/C4stro/StoreBooks/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/C4stro/StoreBooks/actions/workflows/dotnet.yml)
 
+
 Project for the purchase and registration of books with the possibility of converting the value into EUR, BRL, GBP and USD.
 ###### Using the API of https://exchangeratesapi.io/ ######
 ##

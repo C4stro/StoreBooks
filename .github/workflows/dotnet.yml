@@ -1,0 +1,49 @@
+name: Deploy AWS.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    
+    - name: Install dependencies
+      run: dotnet restore ./src/storeBooks.api/storeBooks.api/
+   
+    - name: Build
+      run: dotnet build --configuration Release --no-restore ./src/storeBooks.api/storeBooks.api/
+    
+    - name: Test
+      run: dotnet test --no-build --verbosity normal ./src/storeBooks.api/storeBooks.api/
+    
+    - name: Publish
+      run: dotnet publish ./src/storeBooks.api/storeBooks.api/
+      
+    - name: Zip Package
+      run: |
+        cd ./src/storeBooks.api/storeBooks.api/bin/Debug/netcoreapp3.1/
+        zip -r publish/out.Zip *
+      
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v13
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+        application_name: store-books
+        environment_name: Storebooks-env
+        region: us-east-2
+        version_label: ${{ github.run_id }}
+        version_description: ${{ github.sha }}
+        deployment_package: ./src/storeBooks.api/storeBooks.api/bin/Debug/netcoreapp3.1/publish/out.Zip
